@@ -91,7 +91,8 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
 
   events: {
     'click .close': 'hide',
-    'click .mode_menu a': '_onClickMode'
+    'click .mode_menu a': '_onClickMode',
+    'click #printButton': '_openPrint'
   },
 
   initialize: function() {
@@ -256,6 +257,16 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
 
     this.$help.html(this.model.get('help'));
     this.$button.html(this.model.get('button_title'));
+  },
+
+  _openPrint: function() {
+    var url = window.location.origin + '/embed' + window.location.pathname;
+    if (window.location.search) {
+      url += window.location.search + '&print=map';
+    } else {
+      url += '?print=map';
+    }
+    window.location = url;
   },
 
   render: function() {

@@ -1,0 +1,22 @@
+<script type="text/javascript">
+  window.onload = function() {
+    $('iframe').contents().find('head').append("<style media='print'>\
+    .section, .footer, .feedback-link, .analysis_subscribe, .share_dialog, .analysis_reset{\
+      display: none;\
+    }\
+</style>");
+    $('#printButton').on('click', function() {
+      $('iframe')[0].contentWindow.print();
+    });
+  };
+</script>
+
+<div style="width: 100%; text-align: center; font-weight: 300; color: #777; font-size: 32px; padding: 30px 0; border-bottom: 1px solid #ddd; margin-bottom: 20px;">Print this map</div>
+
+<div style="text-align: center;">
+  <iframe src="<%= @map_url %>" width="80%" height="600"></iframe>
+<div>
+
+<section class="section section_dark" style="position: absolute; bottom:20px; width: 100%;">
+  <a class="btn dark-glow" id="printButton" href="#">Print</a>
+</section>
