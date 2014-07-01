@@ -210,10 +210,11 @@ CartoDBInfowindow.prototype.setPosition = function(latlng) {
     // Adjust pan
     this._adjustPan();
   }
-
+  
   if (this.div_) {
-    var div = this.div_
-    , pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+    var div = this.div_,
+    olatlng = this.latlng_ ? new google.maps.LatLng(this.latlng_[0], this.latlng_[1]) : this.latlng_,
+    pixPosition = this.getProjection().fromLatLngToDivPixel(olatlng);
     if (pixPosition) {
       div.style.width = this.width_ + 'px';
       div.style.left = (pixPosition.x - this.width_ / 2 + this.offsetHorizontal_) + 'px';
@@ -309,9 +310,11 @@ CartoDBInfowindow.prototype._show = function() {
 
 
 CartoDBInfowindow.prototype._adjustPan = function() {
+  //debugger;
   var left = 0,
       top = 0,
-      pixPosition = this.getProjection().fromLatLngToContainerPixel(this.latlng_),
+      latlng = new google.maps.LatLng(this.latlng_[0], this.latlng_[1]),
+      pixPosition = this.getProjection().fromLatLngToContainerPixel(latlng),
       container = this.map_.getDiv(),
       div_height = this.div_.clientHeight;
 

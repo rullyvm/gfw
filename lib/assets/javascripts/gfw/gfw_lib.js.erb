@@ -647,14 +647,19 @@ GFW.modules.app = function(gfw) {
           type: 'cartodb',
           sublayers: [{
             sql: query,
-            cartocss: '#table_name {marker-fill: #F0F0F0;}',
+            cartocss: gfwStyles,
             interactivity: 'cartodb_id'
           }]
         })
-          .addTo(map, 0)
+          .addTo(map, map.overlayMapTypes.getLength())
           .done(function(layer) {
             that.mainLayer = layer;
-            that.mainLayer.getSubLayer(0).setInteraction(true);
+            layer.setInteraction(true);
+            layer
+              .on('featureClick', that._onMainLayerClick)
+              .on('error', function(err) {
+                console.log('error: ' + err);
+              });
           }).error(function(err) {
             console.log(err);
           });
@@ -703,8 +708,6 @@ GFW.modules.app = function(gfw) {
       
       var makeSuccessCallback = function(pairs) {
         return function(json) {
-
-
           if (!json || (json && !json.rows)) return;
 
           //delete json.rows[0]['cartodb_id'],
@@ -1144,7 +1147,7 @@ GFW.modules.app = function(gfw) {
               interactivity: 'cartodb_id'
             }]
           })
-            .addTo(map, 1)
+            .addTo(map, map.overlayMapTypes.getLength())
             .done(function(layer) {
               that.baseLayer = layer;
             }).error(function(err) {
@@ -1182,6 +1185,7 @@ GFW.modules.app = function(gfw) {
             var query = [
               "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "' AND CAST(confidence AS INT)> 30"
             ].join(' ');
+
             this.baseLayer.setQuery(query);
           }, this));
         }

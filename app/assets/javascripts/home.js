@@ -7,10 +7,10 @@
 //= require jquery.qtip.min
 //= require imgLiquid.min
 //= require wax.g.min
-//= require cartodb-gmapsv3
 //= require minpubsub
 //= require markerclusterer_compiled
 //= require url.min
+//= require gfw_styles
 //= require gfw/deforestation_tile_layer
 //= require gfw/forest2000_tile_layer
 //= require gfw/canvas_tile_layer
