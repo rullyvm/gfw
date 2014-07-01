@@ -628,6 +628,8 @@ GFW.modules.app = function(gfw) {
     },
 
     renderLayers: function() {
+      var that = this;
+
       if (this.layers.length > 0) {
         var template = "SELECT cartodb_id||':' ||'{{ table_name }}' as cartodb_id, the_geom_webmercator, '{{ table_name }}' AS name FROM {{ table_name }}";
 
@@ -638,36 +640,51 @@ GFW.modules.app = function(gfw) {
         queryArray.push("(SELECT cartodb_id||':' ||'caf_lc_1' as cartodb_id, the_geom_webmercator, 'caf_lc_1' AS name FROM caf_lc_1 LIMIT 0)") //a hack for the stupid layer show hide discoloration thing I found
         var query = queryArray.join(' UNION ALL ');
 
-        this.mainLayer && this.mainLayer.setMap(null);
+        this.mainLayer && this.mainLayer.remove();
 
-        this.mainLayer = new CartoDBLayer({
-          map: map,
-          user_name: '',
-          tiler_domain: this.cloudfront_url,
-          sql_domain: this.cloudfront_url,
-          extra_params: { v: this.global_version, cache_policy: 'persist' }, //define a verison number on requests
-          tiler_path: '/tiles/',
-          tiler_suffix: '.png',
-          tiler_grid: '.grid.json',
-          table_name: 'gfw2_layerstyles_v4',
-          query: query,
-          layer_order: 0,
-          opacity: 1,
-          interactivity: 'cartodb_id',
-          featureClick: this._onMainLayerClick,
-          featureOver: function(ev, latlng, pos, data) { map.setOptions({ draggableCursor: 'pointer' }); },
-          featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
-          debug: false,
-          auto_bound: false
-        });
+        cartodb.createLayer(map, {
+          user_name: 'wri-01',
+          type: 'cartodb',
+          sublayers: [{
+            sql: query,
+            cartocss: '#table_name {marker-fill: #F0F0F0;}',
+            interactivity: 'cartodb_id'
+          }]
+        })
+          .addTo(map, 0)
+          .done(function(layer) {
+            that.mainLayer = layer;
+            that.mainLayer.getSubLayer(0).setInteraction(true);
+          }).error(function(err) {
+            console.log(err);
+          });
 
-        this.mainLayer.setInteraction(true);
+        // this.mainLayer = new CartoDBLayer({
+        //   map: map,
+        //   user_name: '',
+        //   tiler_domain: this.cloudfront_url,
+        //   sql_domain: this.cloudfront_url,
+        //   extra_params: { v: this.global_version, cache_policy: 'persist' }, //define a verison number on requests
+        //   tiler_path: '/tiles/',
+        //   tiler_suffix: '.png',
+        //   tiler_grid: '.grid.json',
+        //   table_name: 'gfw2_layerstyles_v4',
+        //   query: query,
+        //   layer_order: 0,
+        //   opacity: 1,
+        //   interactivity: 'cartodb_id',
+        //   featureClick: this._onMainLayerClick,
+        //   featureOver: function(ev, latlng, pos, data) { map.setOptions({ draggableCursor: 'pointer' }); },
+        //   featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
+        //   debug: false,
+        //   auto_bound: false
+        // });
 
         if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
       } else {
         if (this.mainLayer) {
           this.mainLayer.setOpacity(0);
-          this.mainLayer.setInteraction(false);
+          this.mainLayer.getSubLayer(0).setInteraction(false);
         }
       }
     },
@@ -975,7 +992,7 @@ GFW.modules.app = function(gfw) {
       }
 
       if (this.baseLayer && this.currentBaseLayer !== 'fires') {
-        this.baseLayer.setOptions({ opacity: 0 });
+        this.baseLayer.setOpacity(0);
       }
     },
 
@@ -1065,6 +1082,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadBaseLayer: function() {
+      var that = this;
       var table_name = null;
       if (this.currentBaseLayer && this.currentBaseLayer.indexOf('loss') === 0) {
         if (config.mapLoaded && !this.time_layer_loss) {
@@ -1114,26 +1132,43 @@ GFW.modules.app = function(gfw) {
         var current_date = new Date(),
             current_hour = current_date.getUTCHours();
         if (this.baseLayer) {
-          this.baseLayer.setOptions({ opacity: 1 , extra_params: { v: this.global_version, hour: current_hour }});
+          this.baseLayer.setOpacity(1);
+          // this.baseLayer.setOptions({ opacity: 1 , extra_params: { v: this.global_version, hour: current_hour }});
         } else {
-          this.baseLayer = new CartoDBLayer({
-            map: map,
-            user_name: '',
-            tiler_domain: 'dyynnn89u7nkm.cloudfront.net',
-            sql_domain: 'dyynnn89u7nkm.cloudfront.net',
-            tiler_path: '/tiles/',
-            extra_params: { v: this.global_version, hour: current_hour }, // define a verison number on requests
-            tiler_suffix: '.png',
-            table_name: this._getTableName(this.currentBaseLayer),
-            query: 'SELECT * FROM global_7d',
-            tile_style:'#global_7d{marker-fill: #FFCC00; marker-width: 2; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-opacity: 0.9; marker-comp-op: multiply; marker-type: ellipse; marker-placement: point; marker-allow-overlap: true; marker-clip: false; marker-multi-policy: largest; } #global_7d[zoom>4]{ marker-width: 3; } #global_7d[zoom>6]{ marker-width: 5; } #global_7d[zoom>11]{ marker-width: 13; } #global_7d[zoom>12]{ marker-width: 25; } #global_7d[zoom>13]{ marker-width: 50; } #global_7d[zoom>14]{ marker-width: 100; } #global_7d[zoom>15]{ marker-width: 200; } ',
-            layer_order: 1,
-            interactivity: 'cartodb_id',
-            featureClick: this._onFiresLayerClick,
-            featureOver: function(ev, latlng, pos, data) { map.setOptions({ draggableCursor: 'pointer' }); },
-            featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
-            auto_bound: false
-          });
+          cartodb.createLayer(map, {
+            user_name: 'wri-01',
+            type: 'cartodb',
+            sublayers: [{
+              sql: 'SELECT * FROM global_7d',
+              cartocss: '#global_7d{marker-fill: #FFCC00; marker-width: 2; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-opacity: 0.9; marker-comp-op: multiply; marker-type: ellipse; marker-placement: point; marker-allow-overlap: true; marker-clip: false; marker-multi-policy: largest; } #global_7d[zoom>4]{ marker-width: 3; } #global_7d[zoom>6]{ marker-width: 5; } #global_7d[zoom>11]{ marker-width: 13; } #global_7d[zoom>12]{ marker-width: 25; } #global_7d[zoom>13]{ marker-width: 50; } #global_7d[zoom>14]{ marker-width: 100; } #global_7d[zoom>15]{ marker-width: 200; } ',
+              interactivity: 'cartodb_id'
+            }]
+          })
+            .addTo(map, 1)
+            .done(function(layer) {
+              that.baseLayer = layer;
+            }).error(function(err) {
+              console.log(err);
+            });
+
+          // this.baseLayer = new CartoDBLayer({
+          //   map: map,
+          //   user_name: '',
+          //   tiler_domain: 'dyynnn89u7nkm.cloudfront.net',
+          //   sql_domain: 'dyynnn89u7nkm.cloudfront.net',
+          //   tiler_path: '/tiles/',
+          //   extra_params: { v: this.global_version, hour: current_hour }, // define a verison number on requests
+          //   tiler_suffix: '.png',
+          //   table_name: this._getTableName(this.currentBaseLayer),
+          //   query: 'SELECT * FROM global_7d',
+          //   tile_style:'#global_7d{marker-fill: #FFCC00; marker-width: 2; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-opacity: 0.9; marker-comp-op: multiply; marker-type: ellipse; marker-placement: point; marker-allow-overlap: true; marker-clip: false; marker-multi-policy: largest; } #global_7d[zoom>4]{ marker-width: 3; } #global_7d[zoom>6]{ marker-width: 5; } #global_7d[zoom>11]{ marker-width: 13; } #global_7d[zoom>12]{ marker-width: 25; } #global_7d[zoom>13]{ marker-width: 50; } #global_7d[zoom>14]{ marker-width: 100; } #global_7d[zoom>15]{ marker-width: 200; } ',
+          //   layer_order: 1,
+          //   interactivity: 'cartodb_id',
+          //   featureClick: this._onFiresLayerClick,
+          //   featureOver: function(ev, latlng, pos, data) { map.setOptions({ draggableCursor: 'pointer' }); },
+          //   featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
+          //   auto_bound: false
+          // });
           subscribe('timeline:change_date_fires', _.bind(function(end_day, options) {
             var year  = end_day.getUTCFullYear(),
                 month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
