@@ -15,7 +15,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       layers: [],
-      threshold: 10
+      threshold: 30
     }
   });
 
@@ -26,6 +26,7 @@ define([
      */
     supportedLayers: [
       'loss',
+      'forestgain',
       'forest2000'
     ],
 
@@ -81,8 +82,11 @@ define([
      * Toggle threshold widget if any supported layer is active.
      */
     _setVisibility: function() {
-      this.view.$widgetBtn.toggleClass('disabled',
-        !this.status.get('layers').length);
+      if (this.status.get('layers').length) {
+        this.view.toggleWidgetBtn(false);
+      } else {
+        this.view.toggleWidgetBtn(true);
+      }
     },
 
     /**
@@ -135,7 +139,12 @@ define([
       }
 
       return p;
-    }
+    },
+
+    initExperiment: function(id){
+      mps.publish('Experiment/choose',[id]);
+    },
+
   });
 
   return ThresholdPresenter;
