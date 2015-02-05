@@ -305,6 +305,9 @@
   &.selected {
     display: block;
   }
+  &.center{
+    text-align: center;
+  }
   header {
     color: $dark;
     h2 {
@@ -547,6 +550,13 @@
         .bullets {
           list-style-type: disc;
           color: $dark;
+          &.center {
+            list-style-type: none;
+            > li{
+              margin-left: 0;
+            }
+          }
+
           >li {
             padding: 10px 0 0;
             font-size: 14px;
@@ -606,19 +616,19 @@
     }
     .logo-list {
       margin: 0 0 20px;
-      @include clearfix();
+      @include row(center);
+      @include flex-wrap(wrap);
       @media (min-width: $br-mobile) {
         margin: 0;
       }
 
       >li {
         display: inline-block;
-        width: 50%;
-        float: left;
+        // width: 50%;
         height: 60px;
-        margin: 25px 0 0;
+        margin: 25px 40px;
         @media (min-width: $br-mobile) {
-          width: 33%;
+          // width: 33.33333%;
         }
 
         a {
