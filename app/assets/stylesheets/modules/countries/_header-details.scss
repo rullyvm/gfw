@@ -1,0 +1,289 @@
+.country-header {
+  background: #333;
+
+  // TITLE
+  .country-title {
+    padding: 20px;
+    .embed & {
+      padding: 20px 20px 5px;
+    }
+
+    h1 {
+      color: white;
+      font-size: 47px;
+      display: inline-block;
+      font-weight: 300;
+      width: 100%;
+      margin-top: 0.1em;
+      margin-bottom: 0.2em;
+      a{
+        top: -7px;
+      }
+      .embed & {
+        max-width: 100%;
+        font-size: 32px;
+        a{ display: none;}
+      }
+    }
+
+    .country-selector {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 2px;
+      border: 1px solid $dark;
+      border-radius: 9px;
+      height: 39px;
+      width: 310px;
+      position: relative;
+      right: -4px;
+      .embed & {
+        display: none;
+      }
+      .white{
+        color: $white;
+      }
+      .dark{
+        color: $dark;
+      }
+      &.active{
+        &:before{
+          display: block;
+        }
+      }
+      &:after{
+        content: "";
+        border-color: $dark transparent;
+        border-style: solid;
+        border-width: 6px 5px 0 5px;
+        width: 0;
+        height: 0;
+        top: 50%;
+        right: 20px;
+        margin-top: -3px;
+        position: absolute;
+        pointer-events: none;
+      }
+      &:before{
+        content: "";
+        padding: 5px;
+        color: $dark;
+        font-size: 13px;
+        top: 9px;
+        right: 35px;
+        position: absolute;
+        cursor: pointer;
+        display: none;
+        &:hover {
+          color: lighten($dark, 10);
+        }
+      }
+      select {
+        border: none;
+        font-size: 13px;
+        text-transform: uppercase;
+        background: transparent;
+        color: #FFF;
+        -webkit-appearance: none;
+        padding: 10px 15px;
+        width: 100%;
+        -moz-appearance: none;
+        text-indent: 0.01px;
+        text-overflow: '';
+        &::-ms-expand {
+          display: none;
+        }
+
+        &:focus {
+          outline: 0;
+        }
+      }
+    }
+  } // country-title
+
+  .country-container {
+    height: 300px;
+    .embed & {
+      height: 230px;
+    }
+
+    .country-preview {
+      width: 100%;
+      height: 100%;
+      float: left;
+      .embed & {
+        width: 100%;
+      }
+
+
+      h4 {
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        color: #FEFEFE;
+        opacity: .5;
+      }
+
+      .map,
+      .tree-numbers,
+      .loss-gain-graph {
+        float: left;
+        height: 100%;
+      }
+
+      .tree-numbers,
+      .loss-gain-graph {
+        padding: 30px 10px;
+        .embed & {
+          padding: 10px 0;
+        }
+      }
+
+      .map {
+        width: 40%;
+        height: 100%;
+        background: transparent;
+        cursor: default;
+        .embed & {
+          width: 33.33333%;
+        }
+
+        &.loaded {
+          background: #333;
+        }
+      }
+
+      .mobile-scroll{
+        display: none;
+      }
+
+      .tree-numbers {
+        width: 25%;
+        // padding-left: 20px;
+        .embed & {
+          width: 28.33333%;
+        }
+
+        h4 {
+          width: 150px;
+        }
+
+        .amount,
+        .unit {
+          margin-top: 6px;
+          color: $cGreen;
+          display: inline-block;
+        }
+
+        .amount {
+          font-size: 47px;
+          font-weight: 500;
+        }
+
+        .total-area {
+          margin-top: 18px;
+        }
+
+        .total-area .amount {
+          font-size: 29px;
+        }
+      }
+
+      .loss-gain-graph {
+        width: 35%;
+        position: relative;
+        .embed & {
+          width: 33.33333%;
+        }
+
+        .coming-soon {
+          display: none;
+          position: absolute;
+          z-index: 10;
+          top: 70px;
+          left: 10px;
+          padding: 30px 0;
+          margin-right: 10px;
+          font-size: 17px;
+          text-transform: uppercase;
+          text-align: center;
+          color: #999;
+          background: $dark;
+
+          span {
+            width: 90%;
+            display: inline-block;
+          }
+        }
+
+        &.ghost {
+          @include opacity(.5);
+          cursor: default;
+        }
+
+        h4 {
+          margin-bottom: 20px;
+        }
+
+        .bar {
+          shape-rendering: "crispEdges";
+        }
+
+        .graph-amount,
+        .graph-date {
+          text-align: center;
+          display: block;
+          max-width: 205px;
+        }
+
+        .graph-amount {
+          font-size: 30px;
+          font-weight: 500;
+          color: $cGreen;
+        }
+
+        .graph-date {
+          color: #FEFEFE;
+          opacity: .5;
+          margin-top: 2px;
+          font-size: 13px;
+        }
+
+        .gain-tooltip {
+          position: absolute;
+          padding: 10px;
+          width: 150px;
+          background: white;
+          text-align: center;
+          border-radius: 5px;
+          font-size: 22px;
+          color: $cGreen;
+
+          span {
+            font-size: 13px;
+            color: #524F5C;
+            margin-top: 2px;
+            display: block;
+          }
+
+          &:before {
+            content:'';
+            display:block;
+            width:0;
+            height:0;
+            position:absolute;
+
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
+
+            right: 0;
+            left: 0;
+            margin: auto;
+            bottom: -8px;
+          }
+        }
+      } // loss-gain-graph
+    } // country-preview
+
+  } // country-details
+} // country-header

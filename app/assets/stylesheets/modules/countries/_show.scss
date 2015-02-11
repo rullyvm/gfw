@@ -1,7 +1,36 @@
-.country-show {
+// Layout
+.country-show{
   margin-top: 50px;
   font-weight: 400;
   color: $dark;
+  .country-header{
+    width: 100%;
+    .country-header-inner{
+
+      .country-details{
+        width: 100%;
+        padding-right: 215px;
+      }
+
+      .country-sidenav{
+        position: absolute;
+        width: 215px;
+        height: 100%;
+        right: 0;
+        top: 0;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+.country-show {
 
   .icon {
     width: 18px;
@@ -39,35 +68,13 @@
       display: none;
     }
   }
+
   .embed-country-title{
     margin-top: 50px;
     text-align: center;
     font-size: 2em;
   }
-  .share_control {
-    position: relative;
-    width: auto;
-    height: 39px;
-    left: auto;
-    right: auto;
-    top: auto;
-    display: inline-block;
-    padding: 10px 12px 0 12px;
-    text-transform: uppercase;
-    border-radius: 20px;
 
-    .country-icons-share {
-      height: 16px;
-      width: 16px;
-      display: inline-block;
-      vertical-align: bottom;
-      margin-left: 5px;
-    }
-
-    &:hover {
-      border-color: lighten( #73707F, 6% );
-    }
-  }
   .country-share .share_control {
       width: 95px;
       left: 818px;
@@ -76,389 +83,6 @@
       top: -45px;
       background-color: transparent;
     }
-  .country-header {
-    width: 100%;
-    background: #333;
-
-    .country-header-inner {
-      background: #333;
-    }
-
-    .country-title {
-      padding: 20px;
-      .embed & {
-        padding: 20px 20px 5px;
-      }
-
-      h1 {
-        color: white;
-        font-size: 47px;
-        display: inline-block;
-        font-weight: 300;
-        width: 100%;
-        margin-top: 0.1em;
-        margin-bottom: 0.2em;
-        .embed & {
-          max-width: 100%;
-          font-size: 32px;
-        }
-      }
-
-      .country-selector {
-        display: inline-block;
-        vertical-align: top;
-        margin-top: 2px;
-        border: 1px solid #6B6B6B;
-        border-radius: 9px;
-        height: 39px;
-        width: 310px;
-        position: relative;
-        right: -4px;
-        .embed & {
-          display: none;
-        }
-        .white{
-          color: $white;
-        }
-        .dark{
-          color: $dark;
-        }
-      }
-
-      select {
-        border: none;
-        font-size: 13px;
-        text-transform: uppercase;
-        background: transparent;
-        color: #FFF;
-        -webkit-appearance: none;
-        padding: 10px 15px;
-        width: 100%;
-        -moz-appearance: none;
-        text-indent: 0.01px;
-        text-overflow: '';
-        &::-ms-expand {
-          display: none;
-        }
-
-        &:focus {
-          outline: 0;
-        }
-      }
-
-      .selector-arrow {
-        border-color: #73707D transparent;
-        border-style: solid;
-        border-width: 6px 5px 0 5px;
-        width: 0;
-        height: 0;
-        top: 50%;
-        right: 20px;
-        margin-top: -3px;
-        position: absolute;
-        pointer-events: none;
-      }
-
-      .selector-remove {
-        padding: 5px;
-        color: #73707D;
-        font-size: 13px;
-        top: 9px;
-        right: 35px;
-        position: absolute;
-        cursor: pointer;
-        display: none;
-        &:hover {
-          color: lighten(#73707D, 10);
-        }
-      }
-
-      .country-indepth__bubble {
-
-        display: inline-block;
-        margin: 2px 0 0 15px;
-        background: $cGreen;
-        text-align: center;
-        border-radius: 9px;
-        a {
-          display: inline-block;
-          width: 160px;
-          padding: 11px 0 12px 0;
-          color: #fff;
-        }
-      }
-    } // country-title
-
-    .country-details {
-      height: 300px;
-      .embed & {
-        height: 230px;
-      }
-
-      .country-preview {
-        width: calc(100% - 215px);
-        height: 100%;
-        float: left;
-        @include box-sizing(border-box);
-        .embed & {
-          width: 100%;
-        }
-
-
-        h4 {
-          text-transform: uppercase;
-          font-size: 14px;
-          line-height: 18px;
-          color: #FEFEFE;
-          opacity: .5;
-        }
-
-        .map,
-        .tree-numbers,
-        .loss-gain-graph {
-          float: left;
-          height: 100%;
-          @include box-sizing(border-box);
-        }
-
-        .tree-numbers,
-        .loss-gain-graph {
-          padding: 30px 10px;
-          .embed & {
-            padding: 10px 0;
-          }
-        }
-
-        .map {
-          width: 40%;
-          height: 100%;
-          background: transparent;
-          cursor: default;
-          .embed & {
-            width: 33.33333%;
-          }
-
-          &.loaded {
-            background: #333;
-          }
-        }
-
-        .mobile-scroll{
-          display: none;
-        }
-
-        .tree-numbers {
-          width: 25%;
-          // padding-left: 20px;
-          .embed & {
-            width: 28.33333%;
-          }
-
-          h4 {
-            width: 150px;
-          }
-
-          .amount,
-          .unit {
-            margin-top: 6px;
-            color: $cGreen;
-            display: inline-block;
-          }
-
-          .amount {
-            font-size: 47px;
-            font-weight: 500;
-          }
-
-          .total-area {
-            margin-top: 18px;
-          }
-
-          .total-area .amount {
-            font-size: 29px;
-          }
-        }
-
-        .loss-gain-graph {
-          width: 35%;
-          position: relative;
-          .embed & {
-            width: 33.33333%;
-          }
-
-          .coming-soon {
-            display: none;
-            position: absolute;
-            z-index: 10;
-            top: 70px;
-            left: 10px;
-            padding: 30px 0;
-            margin-right: 10px;
-            font-size: 17px;
-            text-transform: uppercase;
-            text-align: center;
-            color: #999;
-            background: $dark;
-
-            span {
-              width: 90%;
-              display: inline-block;
-            }
-          }
-
-          &.ghost {
-            @include opacity(.5);
-            cursor: default;
-          }
-
-          h4 {
-            margin-bottom: 20px;
-          }
-
-          .bar {
-            shape-rendering: "crispEdges";
-          }
-
-          .graph-amount,
-          .graph-date {
-            text-align: center;
-            display: block;
-            max-width: 205px;
-          }
-
-          .graph-amount {
-            font-size: 30px;
-            font-weight: 500;
-            color: $cGreen;
-          }
-
-          .graph-date {
-            color: #FEFEFE;
-            opacity: .5;
-            margin-top: 2px;
-            font-size: 13px;
-          }
-
-          .gain-tooltip {
-            position: absolute;
-            padding: 10px;
-            width: 150px;
-            background: white;
-            text-align: center;
-            border-radius: 5px;
-            font-size: 22px;
-            color: $cGreen;
-
-            span {
-              font-size: 13px;
-              color: #524F5C;
-              margin-top: 2px;
-              display: block;
-            }
-
-            &:before {
-              content:'';
-              display:block;
-              width:0;
-              height:0;
-              position:absolute;
-
-              border-left: 8px solid transparent;
-              border-right: 8px solid transparent;
-              border-top: 8px solid white;
-
-              right: 0;
-              left: 0;
-              margin: auto;
-              bottom: -8px;
-            }
-          }
-        } // loss-gain-graph
-      } // country-preview
-
-      .country-sidenav {
-        float: right;
-        width: 215px;
-        height: calc(100% + 142px);
-        background: transparent;
-
-        > ul {
-          position: relative;
-          top: -143px;
-          width: 100%;
-          height: 100%;
-          padding: 1px 0;
-          @include display-flex();
-          @include flex-direction(column);
-          @include justify-content(space-between);
-          box-sizing: border-box;
-
-          > li {
-            width: 100%;
-            position: relative;
-            border: 1px solid $dark;
-            height: 100%;
-            border-bottom: none;
-            @include display-flex();
-            @include align-items(center);
-
-            a {
-              color: #BEBCC2;
-              display: block;
-              height: 51px;
-              width: 100%;
-              @include box-sizing(border-box);
-              font-weight: 400;
-              text-transform: uppercase;
-              font-size: 14px;
-              cursor: pointer;
-              text-decoration: none;
-              @include display-flex();
-              @include align-items(center);
-              padding: 0 30px 0 20px;
-
-              .sidenav-icon {
-                display: inline-block;
-                position: absolute;
-                top: 50%;
-                right: 20px;
-                @include transform-translate(0,-50%);
-                width: 18px;
-                height: 18px;
-                svg{
-                  fill: #bebcc2;
-                }
-              }
-
-
-              .no_def {
-                svg{
-                  fill: #97bd3d;
-                }
-              }
-              &:hover {
-                .circle {
-                  border: 1px solid #97bd3d;
-                }
-                .sidenav-icon {
-                  svg{
-                    fill: #97bd3d;
-                  }
-                }
-              }
-            }
-            &:hover {
-              background: #464646;
-            }
-          }
-        }
-
-        .umdoptions_dialog {
-
-        }
-      } // country-sidenav
-    } // country-details
-  } // country-header
 
   .country-indepth {
     clear: both;
@@ -1479,7 +1103,6 @@
 .umdoptions_dialog {
   display: none;
   position: relative;
-  float: none;
   width: 100%;
   min-height: 250px;
   padding: 20px 20px 0px 20px;
@@ -1488,9 +1111,10 @@
   z-index: 1000;
 
   @media (min-width: $br-mobile) {
+    position: absolute;
     width: 442px;
-    top: -395px;
-    left: -444px;
+    bottom: 0;
+    right: 100%;
     border: 1px solid #666;
     @include border-radius(3px);
     @include box-shadow(0px 0px 3px #666);
@@ -1557,14 +1181,14 @@
       position: relative;
       width: 159px;
       .source {
-        top: 1px;
-        width: 10px;
+        top: -3px;
+        width: 14px;
         padding: 0;
-        height: 10px;
+        height: 14px;
         position: absolute;
-        right: -240px;
-        @include home-icons-sprite(information);
-        background: image-url('home-icons/information.png');
+        right: 9px;
+        background-position: 0 -2275px;
+        background: none;
       }
     }
     &.trees {
@@ -1786,394 +1410,394 @@
   }
 } // embed
 
-// --- MEDIA QUERIES --- //
-
-
-// maxsize <= 999
-@media only screen and (min-width: 751px) and (max-width: 999px) {
-  .country-show {
-
-    .country-header {
-      .country-details {
-        height: auto;
-      }
-
-      .country-details .country-preview {
-        padding: 20px;
-        float: none;
-        width: 100%;
-        height: 300px;
-      }
-
-      .country-details .country-sidenav {
-        float: none;
-        height: auto;
-        width: 100%;
-        display: table;
-
-        & > ul {
-          top: auto;
-          float: none;
-          width: auto;
-          height: auto;
-          display: table-row;
-        }
-
-        & > ul > li {
-          width: auto;
-          display: table-cell;
-
-          a {
-            display: inline-block;
-            padding: 0 10px;
-            text-align: center;
-            line-height: 51px;
-
-            .sidenav-icon {
-              display: none;
-            }
-          }
-          .umd_options_control {
-            width: 100%;
-          }
-        }
-      }
-    }
-    .country-section {
-      padding: 45px 20px;
-
-      .section-content {
-        &, .section-title {
-          padding: 0;
-        }
-      }
-
-      .section-info {
-        h6 {
-          display: inline-block;
-          width: 75%;
-          box-sizing: border-box;
-          padding: 0 0 10px;
-        }
-      }
-    }
-
-    .country-carbon-stocks-section {
-      padding: 0 20px;
-    } // country-carbon-stocks-section
-
-    .country-blog-section {
-      h3 {
-        padding-top: 0;
-      }
-
-      a {
-        color: white;
-      }
-
-      .columns {
-        min-height: 0;
-      }
-
-      .column.round .title span {
-        margin-top: 10px;
-        display: block;
-      }
-    } // country-blog-section
-  }
-
-  .country-header .country-details {
-    .country-sidenav .umdoptions_dialog,
-    .umdoptions_dialog {
-      position: fixed;
-      top: 0;
-      right: auto;
-      left: 0;
-      width: 100%;
-      height: 100%;
-
-      ul {
-        width: 95%;
-      }
-
-      .slider {
-        width: 100%;
-      }
-
-      p .slider #canopy_slider {
-        width: 100%;
-        margin-left: 0;
-      }
-    }
-  }
-}
-
-// maxsize <= 750
-@media only screen and (max-width: 750px) {
-  .country-show {
-    .country-header {
-      .country-title {
-        padding: 20px 11px;
-
-        .country-indepth__bubble {
-          width: 100%;
-          margin: 15px 0 0;
-        }
-
-        .country-selector {
-          right: 0;
-          width: 100%;
-        }
-      }
-
-      .country-details {
-        height: auto;
-
-        .country-preview {
-          float: none;
-          width: 100%;
-          height: 100%;
-          position: relative;
-
-          .map {
-            height: 260px;
-            width: 100%;
-          }
-          .mobile-scroll{
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 260px;
-            width: 100%;
-            z-index: 200;
-          }
-
-          .tree-numbers,
-          .loss-gain-graph {
-            width: 100%;
-            padding-top: 0;
-            text-align: center;
-          }
-
-          .tree-numbers div {
-            display: inline-block;
-          }
-
-          .tree-cover {
-            width: 180px;
-          }
-
-          .total-area {
-            width: 95px;
-            h4 { width: 100%; }
-          }
-
-          .map,
-          .tree-numbers,
-          .loss-gain-graph {
-            float: none;
-          }
-
-          .loss-gain-graph {
-            text-align: center;
-
-            .graph {
-              height: 100px;
-            }
-
-            .graph svg {
-              width: auto;
-            }
-
-            .graph-amount,
-            .graph-date {
-              max-width: 100%;
-            }
-          }
-        }
-
-        .country-sidenav {
-          float: none;
-          width: 100%;
-
-          ul {
-            display: flex !important;
-            top: 0;
-            padding: 0;
-
-            li {
-              height: auto;
-              border: 0;
-              border-top: 1px solid $dark;
-
-              &:last-child {
-                border-bottom: 1px solid $dark;
-              }
-
-              a {
-                .sidenav-icon {
-                  display: inline-block !important;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .country-nav-container {
-      display: none;
-    }
-
-    .country-section {
-      padding: 45px 20px;
-
-      .section-info {
-        .section-btn {
-          right: 0 !important;
-        }
-      }
-
-      .section-content {
-        .left-col,
-        .right-col {
-          padding: 0;
-          width: 100%;
-        }
-
-        .right-col {
-          .section-btn {
-            right: 0;
-          }
-        }
-      }
-    }
-
-    .country-alerts-section {
-      .forma-alerts-legend {
-        margin-bottom: 10px;
-      }
-
-      .forma-graph {
-        margin-top: 30px;
-      }
-
-      .forma_dropdown-link {
-        display: none;
-      }
-    } // country-alerts-section
-
-    .country-graph-section {
-
-      .forests-type-graph {
-        margin: 0 0 25px 0;
-
-        svg {
-          display: block;
-          width: 225px;
-          margin: 0 auto;
-        }
-      }
-    } // country-graph-section
-
-    .country-employment {
-      .section-info {
-        svg {
-          height: 100%;
-        }
-      }
-
-      .section-content {
-        .left-col {
-          .employment {
-            margin-bottom: 25px;
-          }
-        }
-
-        .right-col {
-          .country-tenure {
-            .line-graph text {
-              font-size: 13px;
-            }
-          }
-        }
-      }
-    } // country-employment
-
-    .country-carbon-stocks-section {
-      padding: 0 !important;
-
-      .section-content {
-        .right-col {
-          margin: 0;
-        }
-      }
-
-      .carbon-text,
-      .emissions-text {
-        width: 100%;
-        margin: 0;
-        padding: 20px;
-      }
-
-      .emissions-text {
-        .section-btn {
-          right: 0 !important;
-        }
-      }
-    } // country-carbon-stocks-section
-
-    .country-policy-section {
-      .missing-link {
-        .section-content {
-          text-align: center;
-          .btn-rdn {
-            width: 100%;
-            margin-bottom: 25px;
-          }
-        }
-      }
-
-      .country-external-links,
-      .national-policy-links {
-        ul > li {
-          display: block;
-          &::after {
-            display: none;
-          }
-        }
-      }
-    } //country-policy-section
-
-    .country-blog-section {
-      text-align: left;
-
-      .section-title {
-        text-align: center;
-      }
-
-      .columns {
-        .column {
-          float: none;
-
-          .story-title,
-          .story-content,
-          p {
-            text-align: left;
-          }
-
-          &.round {
-            .circle-wrapper {
-              text-align: center;
-              margin: 25px auto;
-            }
-          }
-        }
-      }
-    } // country-blog-section
-  }
-}
+// // --- MEDIA QUERIES --- //
+
+
+// // maxsize <= 999
+// @media only screen and (min-width: 751px) and (max-width: 999px) {
+//   .country-show {
+
+//     .country-header {
+//       .country-details {
+//         height: auto;
+//       }
+
+//       .country-details .country-preview {
+//         padding: 20px;
+//         float: none;
+//         width: 100%;
+//         height: 300px;
+//       }
+
+//       .country-details .country-sidenav {
+//         float: none;
+//         height: auto;
+//         width: 100%;
+//         display: table;
+
+//         & > ul {
+//           top: auto;
+//           float: none;
+//           width: auto;
+//           height: auto;
+//           display: table-row;
+//         }
+
+//         & > ul > li {
+//           width: auto;
+//           display: table-cell;
+
+//           a {
+//             display: inline-block;
+//             padding: 0 10px;
+//             text-align: center;
+//             line-height: 51px;
+
+//             .sidenav-icon {
+//               display: none;
+//             }
+//           }
+//           .umd_options_control {
+//             width: 100%;
+//           }
+//         }
+//       }
+//     }
+//     .country-section {
+//       padding: 45px 20px;
+
+//       .section-content {
+//         &, .section-title {
+//           padding: 0;
+//         }
+//       }
+
+//       .section-info {
+//         h6 {
+//           display: inline-block;
+//           width: 75%;
+//           box-sizing: border-box;
+//           padding: 0 0 10px;
+//         }
+//       }
+//     }
+
+//     .country-carbon-stocks-section {
+//       padding: 0 20px;
+//     } // country-carbon-stocks-section
+
+//     .country-blog-section {
+//       h3 {
+//         padding-top: 0;
+//       }
+
+//       a {
+//         color: white;
+//       }
+
+//       .columns {
+//         min-height: 0;
+//       }
+
+//       .column.round .title span {
+//         margin-top: 10px;
+//         display: block;
+//       }
+//     } // country-blog-section
+//   }
+
+//   .country-header .country-details {
+//     .country-sidenav .umdoptions_dialog,
+//     .umdoptions_dialog {
+//       position: fixed;
+//       top: 0;
+//       right: auto;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+
+//       ul {
+//         width: 95%;
+//       }
+
+//       .slider {
+//         width: 100%;
+//       }
+
+//       p .slider #canopy_slider {
+//         width: 100%;
+//         margin-left: 0;
+//       }
+//     }
+//   }
+// }
+
+// // maxsize <= 750
+// @media only screen and (max-width: 750px) {
+//   .country-show {
+//     .country-header {
+//       .country-title {
+//         padding: 20px 11px;
+
+//         .country-indepth__bubble {
+//           width: 100%;
+//           margin: 15px 0 0;
+//         }
+
+//         .country-selector {
+//           right: 0;
+//           width: 100%;
+//         }
+//       }
+
+//       .country-details {
+//         height: auto;
+
+//         .country-preview {
+//           float: none;
+//           width: 100%;
+//           height: 100%;
+//           position: relative;
+
+//           .map {
+//             height: 260px;
+//             width: 100%;
+//           }
+//           .mobile-scroll{
+//             display: block;
+//             position: absolute;
+//             top: 0;
+//             left: 0;
+//             height: 260px;
+//             width: 100%;
+//             z-index: 200;
+//           }
+
+//           .tree-numbers,
+//           .loss-gain-graph {
+//             width: 100%;
+//             padding-top: 0;
+//             text-align: center;
+//           }
+
+//           .tree-numbers div {
+//             display: inline-block;
+//           }
+
+//           .tree-cover {
+//             width: 180px;
+//           }
+
+//           .total-area {
+//             width: 95px;
+//             h4 { width: 100%; }
+//           }
+
+//           .map,
+//           .tree-numbers,
+//           .loss-gain-graph {
+//             float: none;
+//           }
+
+//           .loss-gain-graph {
+//             text-align: center;
+
+//             .graph {
+//               height: 100px;
+//             }
+
+//             .graph svg {
+//               width: auto;
+//             }
+
+//             .graph-amount,
+//             .graph-date {
+//               max-width: 100%;
+//             }
+//           }
+//         }
+
+//         .country-sidenav {
+//           float: none;
+//           width: 100%;
+
+//           ul {
+//             display: flex !important;
+//             top: 0;
+//             padding: 0;
+
+//             li {
+//               height: auto;
+//               border: 0;
+//               border-top: 1px solid $dark;
+
+//               &:last-child {
+//                 border-bottom: 1px solid $dark;
+//               }
+
+//               a {
+//                 .sidenav-icon {
+//                   display: inline-block !important;
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     .country-nav-container {
+//       display: none;
+//     }
+
+//     .country-section {
+//       padding: 45px 20px;
+
+//       .section-info {
+//         .section-btn {
+//           right: 0 !important;
+//         }
+//       }
+
+//       .section-content {
+//         .left-col,
+//         .right-col {
+//           padding: 0;
+//           width: 100%;
+//         }
+
+//         .right-col {
+//           .section-btn {
+//             right: 0;
+//           }
+//         }
+//       }
+//     }
+
+//     .country-alerts-section {
+//       .forma-alerts-legend {
+//         margin-bottom: 10px;
+//       }
+
+//       .forma-graph {
+//         margin-top: 30px;
+//       }
+
+//       .forma_dropdown-link {
+//         display: none;
+//       }
+//     } // country-alerts-section
+
+//     .country-graph-section {
+
+//       .forests-type-graph {
+//         margin: 0 0 25px 0;
+
+//         svg {
+//           display: block;
+//           width: 225px;
+//           margin: 0 auto;
+//         }
+//       }
+//     } // country-graph-section
+
+//     .country-employment {
+//       .section-info {
+//         svg {
+//           height: 100%;
+//         }
+//       }
+
+//       .section-content {
+//         .left-col {
+//           .employment {
+//             margin-bottom: 25px;
+//           }
+//         }
+
+//         .right-col {
+//           .country-tenure {
+//             .line-graph text {
+//               font-size: 13px;
+//             }
+//           }
+//         }
+//       }
+//     } // country-employment
+
+//     .country-carbon-stocks-section {
+//       padding: 0 !important;
+
+//       .section-content {
+//         .right-col {
+//           margin: 0;
+//         }
+//       }
+
+//       .carbon-text,
+//       .emissions-text {
+//         width: 100%;
+//         margin: 0;
+//         padding: 20px;
+//       }
+
+//       .emissions-text {
+//         .section-btn {
+//           right: 0 !important;
+//         }
+//       }
+//     } // country-carbon-stocks-section
+
+//     .country-policy-section {
+//       .missing-link {
+//         .section-content {
+//           text-align: center;
+//           .btn-rdn {
+//             width: 100%;
+//             margin-bottom: 25px;
+//           }
+//         }
+//       }
+
+//       .country-external-links,
+//       .national-policy-links {
+//         ul > li {
+//           display: block;
+//           &::after {
+//             display: none;
+//           }
+//         }
+//       }
+//     } //country-policy-section
+
+//     .country-blog-section {
+//       text-align: left;
+
+//       .section-title {
+//         text-align: center;
+//       }
+
+//       .columns {
+//         .column {
+//           float: none;
+
+//           .story-title,
+//           .story-content,
+//           p {
+//             text-align: left;
+//           }
+
+//           &.round {
+//             .circle-wrapper {
+//               text-align: center;
+//               margin: 25px auto;
+//             }
+//           }
+//         }
+//       }
+//     } // country-blog-section
+//   }
+// }
 
 
 .source_category_title{

@@ -25,13 +25,19 @@
 @import "modules/buttons1600";
 @import "modules/icons1600";
 @import "modules/slick1600";
+// list
 @import "modules/countries/country";
-@import "modules/countries/overview";
-@import "modules/countries/show";
-@import "modules/dropdowns";
 
+// overview
+@import "modules/countries/overview";
+
+// show
+@import "modules/countries/show";
+@import "modules/countries/header-details";
+@import "modules/countries/sidenav";
 
 // Common
+@import "modules/dropdowns";
 @import "states";
 
 // Layouts
