@@ -5,11 +5,12 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'amplify',
   'd3',
   'mps',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, CountryHelper) {
+], function($, Backbone, _, amplify, d3, mps, CountryHelper) {
 
   'use strict';
 
@@ -26,16 +27,19 @@ define([
         return
       }
 
-      this.helper = CountryHelper;
       this.$searchBox = $('#searchCountry');
-      this._getCountries();
-      this._drawCountries();
+      this.$countries = $('.country');
+      this.helper = CountryHelper;
+      this.countries_topology = amplify.store('countries_topology');
+
+      // INITS
+      this.$searchBox.focus();
+      this._getListCountries();
+      this._storeCountries();
       this._searchCountries();
     },
 
-    _getCountries : function(){
-      this.$searchBox.focus();
-      this.$countries = $('.country');
+    _getListCountries : function(){
       this.countries_list = _.map($('.country-name'),function(el){
         return $(el).text();
       });
@@ -62,35 +66,67 @@ define([
       }
     },
 
-    _drawCountries: function() {
+    _storeCountries: function() {
       var that = this;
+      // Check if topology of all countries is stored in localStorage
+      if (this.countries_topology) {
+        this.drawCountries();
+      }else{
+        var sql = ['SELECT c.iso, c.enabled, m.the_geom',
+                   'FROM ne_50m_admin_0_countries m, gfw2_countries c',
+                   'WHERE c.iso = m.adm0_a3 AND c.enabled',
+                   '&format=topojson'].join(' ');
 
-      var sql = ['SELECT c.iso, c.enabled, m.the_geom',
-                 'FROM ne_50m_admin_0_countries m, gfw2_countries c',
-                 'WHERE c.iso = m.adm0_a3 AND c.enabled',
-                 '&format=topojson'].join(' ');
+        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
+          this.countries_topology = topology;
+          amplify.store('countries_topology', topology);
+          this.drawCountries();
+        }, this ));
 
-      var sql_ = ['SELECT c.iso, m.the_geom',
-                  'FROM ne_50m_admin_0_countries m, gfw2_countries c',
-                  'WHERE c.iso = m.adm0_a3',
-                  "AND c.iso = 'TWN'&format=topojson"].join(' ');
+      }
+    },
 
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
-        for (var i = 0; i < Object.keys(topology.objects).length; i++) {
-          var iso = topology.objects[i].properties.iso;
+    drawCountries: function () {
+      for (var i = 0; i < Object.keys(this.countries_topology.objects).length; i++) {
+        var iso = this.countries_topology.objects[i].properties.iso;
+        var bounds = this.helper.draw(this.countries_topology, i, iso, { alerts: false });
+      }
+    },
 
-          var bounds = this.helper.draw(topology, i, iso, { alerts: false });
+    // _drawCountries: function() {
+    //   var that = this;
 
-          if (iso === 'CHN') {
-            that.bounds = bounds;
+    //   var sql = ['SELECT c.iso, c.enabled, m.the_geom',
+    //              'FROM ne_50m_admin_0_countries m, gfw2_countries c',
+    //              'WHERE c.iso = m.adm0_a3 AND c.enabled',
+    //              '&format=topojson'].join(' ');
 
-            d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql_, _.bind(function(error, topology) {
-              this.helper.draw(topology, 0, 'CHN', { alerts: false, bounds: that.bounds});
-            }, this ));
-          }
-        }
-      }, this ));
-    }
+    //   var sql_ = ['SELECT c.iso, m.the_geom',
+    //               'FROM ne_50m_admin_0_countries m, gfw2_countries c',
+    //               'WHERE c.iso = m.adm0_a3',
+    //               "AND c.iso = 'TWN'&format=topojson"].join(' ');
+
+    //   if (this.countries_topology) {
+    //     console.log(this.countries_topology);
+    //   }
+
+
+    //   d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, topology) {
+    //     amplify.store('countries_topology', topology);
+    //     for (var i = 0; i < Object.keys(topology.objects).length; i++) {
+    //       var iso = topology.objects[i].properties.iso;
+
+    //       var bounds = this.helper.draw(topology, i, iso, { alerts: false });
+    //       if (iso === 'CHN') {
+    //         that.bounds = bounds;
+
+    //         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql_, _.bind(function(error, topology) {
+    //           this.helper.draw(topology, 0, 'CHN', { alerts: false, bounds: that.bounds});
+    //         }, this ));
+    //       }
+    //     }
+    //   }, this ));
+    // }
 
 
   });
